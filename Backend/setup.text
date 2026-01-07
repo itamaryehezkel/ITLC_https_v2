@@ -1,0 +1,284 @@
+
+vsce package
+
+____________________________________________________________________________________________________
+%APPDATA%\Code\User\settings.json
+____________________________________________________________________________________________________
+{
+    "security.workspace.trust.untrustedFiles": "open",
+    "editor.minimap.enabled": false,
+    "terminal.integrated.profiles.windows": {
+      "PowerShell": {
+        "path": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+      },
+      "SSH to VM": {
+        "path": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "args": [ "-Command", "ssh vm"] //"-NoExit",
+      }
+    },
+    "terminal.integrated.defaultProfile.windows": "SSH to VM",
+    "files.autoSave": "afterDelay"
+
+}
+
+_______________________________________________________________________________________________________________________________________________________
+alias r='gcc -o /home/tc/itlc/parser/r /home/tc/itlc/parser/itl.c /home/tc/itlc/parser/xxhash.c && cat /home/tc/itlc/parser/t | /home/tc/itlc/parser/r'
+_______________________________________________________________________________________________________________________________________________________
+
+
+
+
+_______________________________________________________________________________________________________________________________________________________
+SSHD_CONFIG  /usr/local/etc/ssh/sshd_config
+_______________________________________________________________________________________________________________________________________________________
+#       $OpenBSD: sshd_config,v 1.104 2021/07/02 05:11:21 dtucker Exp $
+
+# This is the sshd server system-wide configuration file.  See
+# sshd_config(5) for more information.
+
+# This sshd was compiled with PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
+
+# The strategy used for options in the default sshd_config shipped with
+# OpenSSH is to specify options with their default value where
+# possible, but leave them commented.  Uncommented options override the
+# default value.
+
+Port 22
+#AddressFamily any
+ListenAddress 0.0.0.0
+#ListenAddress ::
+
+HostKey /usr/local/etc/ssh/ssh_host_rsa_key
+#HostKey /usr/local/etc/ssh/ssh_host_ecdsa_key
+#HostKey /usr/local/etc/ssh/ssh_host_ed25519_key
+
+# Ciphers and keying
+#RekeyLimit default none
+
+# Logging
+#SyslogFacility AUTH
+#LogLevel INFO
+
+# Authentication:
+
+#LoginGraceTime 2m
+#PermitRootLogin prohibit-password
+#StrictModes yes
+#MaxAuthTries 6
+#MaxSessions 10
+
+PubkeyAuthentication yes
+
+# The default is to check both .ssh/authorized_keys and .ssh/authorized_keys2
+# but this is overridden so installations will only check .ssh/authorized_keys
+AuthorizedKeysFile      .ssh/authorized_keys
+
+#AuthorizedPrincipalsFile none
+
+#AuthorizedKeysCommand none
+#AuthorizedKeysCommandUser nobody
+
+# For this to work you will also need host keys in /usr/local/etc/ssh/ssh_known_hosts
+#HostbasedAuthentication no
+# Change to yes if you don't trust ~/.ssh/known_hosts for
+# HostbasedAuthentication
+#IgnoreUserKnownHosts no
+# Don't read the user's ~/.rhosts and ~/.shosts files
+#IgnoreRhosts yes
+
+# To disable tunneled clear text passwords, change to no here!
+PasswordAuthentication yes
+#PermitEmptyPasswords no
+
+# Change to no to disable s/key passwords
+#KbdInteractiveAuthentication yes
+
+# Kerberos options
+#KerberosAuthentication no
+#KerberosOrLocalPasswd yes
+#KerberosTicketCleanup yes
+#KerberosGetAFSToken no
+
+# GSSAPI options
+#GSSAPIAuthentication no
+#GSSAPICleanupCredentials yes
+
+# Set this to 'yes' to enable PAM authentication, account processing,
+# and session processing. If this is enabled, PAM authentication will
+# be allowed through the KbdInteractiveAuthentication and
+# PasswordAuthentication.  Depending on your PAM configuration,
+# PAM authentication via KbdInteractiveAuthentication may bypass
+# the setting of "PermitRootLogin prohibit-password".
+# If you just want the PAM account and session checks to run without
+# PAM authentication, then enable this but set PasswordAuthentication
+# and KbdInteractiveAuthentication to 'no'.
+#UsePAM no
+
+#AllowAgentForwarding yes
+#AllowTcpForwarding yes
+#GatewayPorts no
+#X11Forwarding no
+#X11DisplayOffset 10
+#X11UseLocalhost yes
+#PermitTTY yes
+#PrintMotd yes
+#PrintLastLog yes
+#TCPKeepAlive yes
+#PermitUserEnvironment no
+#Compression delayed
+#ClientAliveInterval 0
+#ClientAliveCountMax 3
+#UseDNS no
+#PidFile /var/run/sshd.pid
+#MaxStartups 10:30:100
+#PermitTunnel no
+#ChrootDirectory none
+#VersionAddendum none
+
+# no default banner path
+#Banner none
+
+# override default of no subsystems
+Subsystem       sftp    /usr/local/lib/openssh/sftp-server
+
+# Example of overriding settings on a per-user basis
+#Match User anoncvs
+#       X11Forwarding no
+#       AllowTcpForwarding no
+#       PermitTTY no
+#       ForceCommand cvs server
+
+___________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+~/.ssh/authorized_keys
+___________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC3it8SkeTqqjmym5HrYHqVXL2ZvUBA6AxDJw4d5Ob/CTBMM3DwrrtNaVC6uDAf7vyyoJm/+hGEr72IDFQ9mcx3l2PM4d7Le+K9dNdi/iTWy4ErBe7Z6onFFYNKxbFTgx1xWrkEqxdZf+Y0/gzVkO//k1s2xL3Au9VHAYmHaprQn24Ox6BOYhp75V/W3utSLEtohgKq8RfSrWWBVz866CnTOr1gQ6X85sfM+uROa2jJswizGI5Gk9xm5UYY9eozdAwCY9Z43rUNwk78cskkjvYoD6ZERes/ox93picffMtB92d3daKlNevaGY74u0xPfY8qXquW+sU/eEuaU0duD+E4caltnZCUvuFQZdsuQ8eTX9k8tYCqosBm1WEoc8u0qANM7jkEVK1zuA/T0slKIneX/sWmuk3CyrMxdacrUhC9+RmNlvYVxhfNgnb08eZYty+xFDSgw3E3PXNTiVE8TLslF+Apnkvh4WUHbVilRYH+a0danXiE44ojjHSKsjrKaDMgwDPVNbnjq+gZ4n9aR+ACxTgjTDYCdJTVklGZDD0nba8guq71217Hh1YQ+/x2wzC5ro3ceY2caS3IBQrLR9exhdftVnqVwpnoCodT6p9ccHacU42Lo4BKDq2Ud9j5SJe3wfAAMYUdak33jKBIZcZ0rtwsuKzbx0ZHCvG8fu1PiQ== itamar
+___________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+____________________________________
+C:\Users\itamar\.ssh\config
+____________________________________
+Host vm
+  HostName 192.168.0.104
+  User tc
+  IdentityFile C:\Users\itamar\.ssh\id_rsa
+
+
+
+
+  openssl req -new -x509 -nodes -newkey rsa:2048 \
+   -keyout key.pem -out cert.pem -days 3650 \
+   -config san.cnf -extensions v3_req
+
+openssl x509 -in cert.pem -noout -text | grep -A1 "Subject Alternative Name"
+
+
+san.cnf
+________________________________________________________
+[ req ]
+default_bits       = 2048
+distinguished_name = req_distinguished_name
+x509_extensions    = v3_req
+prompt             = no
+
+[ req_distinguished_name ]
+CN = 192.168.0.104
+
+[ v3_req ]
+subjectAltName = @alt_names
+
+[ alt_names ]
+IP.1  = 192.168.0.104
+DNS.1 = localhost
+
+
+import requests
+import socket
+
+
+def scrape(host="https://www.linkedin.com", uri="/search/results/companies/?keywords=AI%20size:50-500"):
+
+    try:
+        headers = {
+            "referer": host,
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+            "Accept" : "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+            # "Accept-Encoding": "gzip, deflate, br, zstd",
+            "Accept-Language": "he-IL,he;q=0.9,en-US;q=0.8,en;q=0.7",
+            "Cache-Control" : "max-age=0"
+        }
+        # Send a GET request
+        response = requests.get(host + uri, headers=headers)
+
+        # Raise an exception for bad status codes (4xx or 5xx)
+        response.raise_for_status()
+
+        # Print the status code
+        print(f"Status Code: {response.status_code}")
+
+        # Print the response text (e.g., JSON data)
+        # print("Response Content:")
+        # print(response.text) #.json()) # If the response is JSON, parse it
+        return response.text #.encode('utf-16').decode('utf-16')
+
+    except requests.exceptions.RequestException as e:
+        print(f"An error occurred: {e}")
+
+
+HOST = '0.0.0.0'  # Listen on all available interfaces
+PORT = 8080      # Port to listen on
+
+
+def parse(data):
+    headers_and_body = data.decode().split('\r\n\r\n')
+    first_line = []
+    headers = {}
+    body = headers_and_body[1] if len(headers_and_body) > 1 else ""
+
+    for i, line in enumerate(headers_and_body[0].split('\r\n')):
+        if i == 0:
+            first_line = line.split(' ')
+        else:
+            headers[line.split(': ')[0]] = line.split(': ')[1]
+    if len(first_line) < 3:
+        return {'method': '', 'uri': '', 'version': '', 'body': body, 'headers':headers}
+    return {'method': first_line[0], 'uri': first_line[1], 'version': first_line[2], 'body': body, 'headers':headers}
+
+
+def start_server():
+    # Create a TCP socket
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server_socket:
+        # Enable address reuse
+        server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        server_socket.bind((HOST, PORT))
+        server_socket.listen()
+
+        print(f"Listening on {HOST}:{PORT}")
+
+        while True:
+            client_socket, client_address = server_socket.accept()
+            with client_socket:
+                print(f"Connection from {client_address}")
+                while True:
+                    data = client_socket.recv(1024)
+                    if not data:
+                        break
+ 
+                    
+                    req = parse(data)
+                 
+
+
+                    print (req['method'], req['uri'])
+
+                    scraped = scrape(uri=req['uri'])
+
+                    default_type = 'text/html'
+                    response = f"HTTP/1.1 200 OK\r\nContent-Type: {default_type}\r\nContent-Length: {len(scraped)}\r\n\r\n{scraped}".encode('utf-8')
+                    
+                    client_socket.sendall(response)
+                    #print (req['headers']['Host'])
+                    #print (req['body'])
+
+                  
+start_server()

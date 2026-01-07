@@ -1,0 +1,40 @@
+
+
+if(uri == "/login" && method == "POST"){
+
+   overrideType = ".json";
+   if(body == "username=b&pass=1234"){
+      overrideFlag = 200;
+      overrideData = '{"status":"success","name":"Lev"}';
+   }else{
+      overrideFlag = 200;
+      overrideData = '{"status":"error"}';
+   }
+  
+}
+
+
+
+
+
+var showUriOrUriAndQuery = uri;
+if(query)
+   showUriOrUriAndQuery = uri + " ? " + query;
+
+
+
+// var start = time + " " + ip + ": " + method;
+// var start = ip + ": " + method;
+
+if(overrideFlag){
+   if(body)
+      print time, ip, method, showUriOrUriAndQuery, body, overrideFlag, overrideData;
+   else 
+      print time, ip, method, showUriOrUriAndQuery, overrideFlag, overrideData;
+}else{
+   if(body)
+      print time, ip, method, showUriOrUriAndQuery, body;
+   else 
+      print time, ip, method, showUriOrUriAndQuery;
+}
+   

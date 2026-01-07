@@ -1,0 +1,6 @@
+
+#!/bin/bash
+
+gcc -L/usr/lib/mysql -lmysqlclient  -o /home/itamar/Workspace/Backend/itl_server /home/itamar/Workspace/Backend/main.c /home/itamar/Workspace/Backend/https/ITL/xxhash.c -pthread -lssl -lcrypto
+
+#cat /home/itamar/Project/www/itl.c | /home/itamar/Project/report/r

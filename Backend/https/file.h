@@ -14,12 +14,14 @@ typedef struct {
 FileList files;
 
 
-FileInfo get_file(const char* filename) {
+FileInfo get_file(const char* host, const char* filename) {
     FileInfo result;
     result.data = NULL;
     result.size = 0;
     char path[1024];
-    strcpy(path, HOME);
+    if(strcmp(host,"localhost") == 0)
+      strcpy(path, HOME);
+    
     strcat(path, filename);
     // printf("%s\n", path);
     FILE* file = fopen(path, "r");

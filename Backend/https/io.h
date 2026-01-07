@@ -1339,6 +1339,14 @@ void handle_transaction(Request * t){
     //x.response = calloc(1024, sizeof(char));
     // x.response =  calloc(HEADER_BUFFER_SIZE, sizeof(char));
 	//("IS FILE\n");
+    int host_len = 0;
+    const char *host_ptr = req_header_get(t, "Host", &host_len);
+    char * host = calloc(host_len, sizeof(char));
+    strncpy(host, host_ptr, host_len);
+    if (host_ptr && host_len > 0) {
+        //printf("Host: %s\n", host);
+    }
+
     if(override_flag->literal.num == 0 && t->method == M_GET){  // default behavior
 
         
@@ -1346,14 +1354,14 @@ void handle_transaction(Request * t){
         if((strcmp(x.uri, "/") == 0 || strcmp(x.uri, "/index.html") == 0) && is_file("/index.html") > -1){
             // ("DEFAULT INDEX\n");
 
-            x.file = get_file("/index.html");
+            x.file = get_file(host, "/index.html");
             sprintf(x.response, "HTTP/1.1 %s\r\nContent-Length: %zu\r\nContent-Type: %s\r\n\r\n", getStatus(200), x.file.size, "text/html");
             send_response(t, x.response, strlen(x.response));
             send_response(t, x.file.data, x.file.size);
             
         }else if( is_file(x.uri) > -1){
 
-            x.file = get_file(x.uri);
+            x.file = get_file(host,x.uri);
             sprintf(x.response, "HTTP/1.1 %s\r\nAccess-Control-Allow-Origin: *\r\nContent-Length: %zu\r\nContent-Type: %s\r\n\r\n", getStatus(200), x.file.size, get_mime_type(x.uri));
             
             send_response(t, x.response, strlen(x.response));
@@ -1369,7 +1377,7 @@ void handle_transaction(Request * t){
     }else if(override_flag->literal.num == 600){
         if(is_file(override_data->literal.str) > -1){
 
-            x.file = get_file(override_data->literal.str);
+            x.file = get_file(host,override_data->literal.str);
             sprintf(x.response, "HTTP/1.1 %s\r\nAccess-Control-Allow-Origin: *\r\nContent-Length: %d\r\nContent-Type: %s\r\n\r\n", getStatus(200), x.file.size, get_mime_type(override_data->literal.str));
             
             send_response(t, x.response, strlen(x.response));
@@ -1407,5 +1415,4 @@ void handle_transaction(Request * t){
 }
 
 #endif
-
 
